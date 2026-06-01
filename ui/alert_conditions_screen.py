@@ -1,6 +1,7 @@
 """Alert conditions configuration screen for Alertra."""
 
 import flet as ft
+from ui.theme import border_all
 
 
 def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
@@ -8,10 +9,10 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
     defaults = dict(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=16,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
     )
     defaults.update(kwargs)
@@ -58,7 +59,7 @@ def _param_editor_sheet(page: ft.Page, indicator, current_params: dict, on_save)
                         ],
                         spacing=4,
                     ),
-                    padding=ft.padding.only(bottom=12),
+                    padding=ft.padding.Padding(left=0, top=0, right=0, bottom=12),
                 )
             )
         elif isinstance(default_val, int):
@@ -93,7 +94,7 @@ def _param_editor_sheet(page: ft.Page, indicator, current_params: dict, on_save)
                         ],
                         spacing=4,
                     ),
-                    padding=ft.padding.only(bottom=12),
+                    padding=ft.padding.Padding(left=0, top=0, right=0, bottom=12),
                 )
             )
 
@@ -124,7 +125,7 @@ def _param_editor_sheet(page: ft.Page, indicator, current_params: dict, on_save)
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
-                    padding=ft.padding.only(bottom=8),
+                    padding=ft.padding.Padding(left=0, top=0, right=0, bottom=8),
                 ),
                 ft.Text(
                     indicator.description,
@@ -140,20 +141,20 @@ def _param_editor_sheet(page: ft.Page, indicator, current_params: dict, on_save)
                         color=ft.Colors.WHITE,
                         style=ft.ButtonStyle(
                             shape=ft.RoundedRectangleBorder(radius=16),
-                            padding=ft.padding.symmetric(horizontal=24, vertical=14),
+                            padding=ft.padding.Padding(left=24, top=14, right=24, bottom=14),
                         ),
                         on_click=_save,
                     ),
-                    padding=ft.padding.only(top=12),
-                    alignment=ft.alignment.center,
+                    padding=ft.padding.Padding(left=0, top=12, right=0, bottom=0),
+                    alignment=ft.alignment.Alignment(0, 0),
                 ),
             ],
             spacing=4,
             scroll=ft.ScrollMode.AUTO,
         ),
-        padding=ft.padding.all(24),
+        padding=ft.padding.Padding(left=24, top=24, right=24, bottom=24),
         bgcolor=ft.Colors.with_opacity(0.95, ft.Colors.GREY_900),
-        border_radius=ft.border_radius.only(top_left=24, top_right=24),
+        border_radius=ft.border_radius.BorderRadius(top_left=24, top_right=24, bottom_left=0, bottom_right=0),
     )
 
     sheet = ft.BottomSheet(
@@ -170,6 +171,7 @@ def build_alert_conditions_screen(
     db,
     indicators: list,
     symbol: str | None = None,
+    on_navigate=None,
 ) -> ft.Control:
     """Build the alert conditions configuration screen."""
 
@@ -179,8 +181,8 @@ def build_alert_conditions_screen(
         title_text = f"Alerts - {symbol}"
 
     def go_back(e):
-        page.views.pop() if page.views else None
-        page.update()
+        if on_navigate:
+            on_navigate("home")
 
     header = ft.Container(
         content=ft.Row(
@@ -202,7 +204,7 @@ def build_alert_conditions_screen(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.only(left=4, right=12, top=12, bottom=8),
+        padding=ft.padding.Padding(left=4, top=12, right=12, bottom=8),
     )
 
     # -- Load saved indicator states --
@@ -284,13 +286,13 @@ def build_alert_conditions_screen(
             bgcolor=ft.Colors.with_opacity(0.3, ft.Colors.TEAL),
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=16),
-                padding=ft.padding.symmetric(horizontal=32, vertical=14),
+                padding=ft.padding.Padding(left=32, top=14, right=32, bottom=14),
                 side=ft.BorderSide(1, ft.Colors.with_opacity(0.3, ft.Colors.TEAL)),
             ),
             on_click=_send_test,
         ),
-        alignment=ft.alignment.center,
-        padding=ft.padding.symmetric(vertical=8),
+        alignment=ft.alignment.Alignment(0, 0),
+        padding=ft.padding.Padding(left=0, top=8, right=0, bottom=8),
     )
 
     # -- Indicator cards --
@@ -314,7 +316,7 @@ def build_alert_conditions_screen(
             ),
             bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.WHITE),
             border_radius=10,
-            padding=ft.padding.symmetric(horizontal=10, vertical=3),
+            padding=ft.padding.Padding(left=10, top=3, right=10, bottom=3),
         )
 
         def _make_toggle_handler(ind_name, sw):
@@ -371,7 +373,7 @@ def build_alert_conditions_screen(
             on_tap=_open_params(ind, params) if ind.default_params else None,
         )
 
-        indicator_cards.append(_glass_card(card_body, padding=ft.padding.symmetric(horizontal=20, vertical=14)))
+        indicator_cards.append(_glass_card(card_body, padding=ft.padding.Padding(left=20, top=14, right=20, bottom=14)))
 
     if not indicator_cards:
         indicator_cards.append(
@@ -384,8 +386,8 @@ def build_alert_conditions_screen(
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=8,
                 ),
-                alignment=ft.alignment.center,
-                padding=ft.padding.only(top=60),
+                alignment=ft.alignment.Alignment(0, 0),
+                padding=ft.padding.Padding(left=0, top=60, right=0, bottom=0),
             )
         )
 
@@ -398,7 +400,7 @@ def build_alert_conditions_screen(
                     weight=ft.FontWeight.W_600,
                     color=ft.Colors.WHITE70,
                 ),
-                padding=ft.padding.only(left=4, bottom=4, top=8),
+                padding=ft.padding.Padding(left=4, top=8, right=0, bottom=4),
             ),
             *indicator_cards,
         ],
@@ -416,12 +418,12 @@ def build_alert_conditions_screen(
                     [cooldown_section, test_button],
                     spacing=0,
                 ),
-                padding=ft.padding.symmetric(horizontal=16),
+                padding=ft.padding.Padding(left=16, top=0, right=16, bottom=0),
             ),
             ft.Container(
                 content=indicators_list,
                 expand=True,
-                padding=ft.padding.symmetric(horizontal=16),
+                padding=ft.padding.Padding(left=16, top=0, right=16, bottom=0),
             ),
         ],
         spacing=4,

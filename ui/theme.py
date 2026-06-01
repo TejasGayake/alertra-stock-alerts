@@ -17,6 +17,14 @@ ACCENT_COLORS = {
 DEFAULT_ACCENT = "teal"
 
 
+def border_all(width: int = 1, color=None) -> ft.Border:
+    """Create a uniform border on all sides."""
+    if color is None:
+        color = ft.Colors.with_opacity(0.2, ft.Colors.WHITE)
+    side = ft.BorderSide(width, color)
+    return ft.border.Border(left=side, top=side, right=side, bottom=side)
+
+
 def get_accent_color(name: str = DEFAULT_ACCENT) -> str:
     return ACCENT_COLORS.get(name, ACCENT_COLORS[DEFAULT_ACCENT])
 
@@ -31,9 +39,7 @@ def get_theme(accent: str = DEFAULT_ACCENT, mode: str = "dark") -> ft.Theme:
             color_scheme=ft.ColorScheme(
                 primary=accent_color,
                 surface=ft.Colors.with_opacity(0.05, ft.Colors.WHITE),
-                surface_variant=ft.Colors.with_opacity(0.08, ft.Colors.WHITE),
-                background=ft.Colors.GREY_900,
-                on_background=ft.Colors.WHITE,
+                surface_dim=ft.Colors.with_opacity(0.08, ft.Colors.WHITE),
                 on_surface=ft.Colors.WHITE,
                 on_surface_variant=ft.Colors.with_opacity(0.7, ft.Colors.WHITE),
             ),
@@ -51,9 +57,7 @@ def get_theme(accent: str = DEFAULT_ACCENT, mode: str = "dark") -> ft.Theme:
             color_scheme=ft.ColorScheme(
                 primary=accent_color,
                 surface=ft.Colors.with_opacity(0.05, ft.Colors.BLACK),
-                surface_variant=ft.Colors.with_opacity(0.08, ft.Colors.BLACK),
-                background=ft.Colors.GREY_100,
-                on_background=ft.Colors.BLACK,
+                surface_dim=ft.Colors.with_opacity(0.08, ft.Colors.BLACK),
                 on_surface=ft.Colors.BLACK,
                 on_surface_variant=ft.Colors.with_opacity(0.7, ft.Colors.BLACK),
             ),
@@ -72,10 +76,10 @@ def glass_container(
         content=content,
         bgcolor=ft.Colors.with_opacity(0.08, ft.Colors.WHITE),
         border_radius=border_radius,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=padding,
-        margin=ft.margin.only(bottom=margin_bottom),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=margin_bottom),
         expand=expand,
     )
 
@@ -91,10 +95,10 @@ def glass_card(
         content=content,
         bgcolor=ft.Colors.with_opacity(0.08, ft.Colors.WHITE),
         border_radius=border_radius,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
         blur=ft.Blur(8, 8, ft.BlurMode.NORMAL),
         padding=padding,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         on_click=on_tap,
         animate_opacity=ft.Animation(200, ft.AnimationCurve.EASE_IN_OUT),
     )

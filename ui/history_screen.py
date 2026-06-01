@@ -2,6 +2,8 @@
 
 import flet as ft
 from datetime import datetime, timedelta
+from ui.theme import border_all
+from ui.theme import border_all
 
 
 def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
@@ -9,10 +11,10 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
     defaults = dict(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=16,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
     )
     defaults.update(kwargs)
@@ -90,7 +92,7 @@ def _alert_entry(alert: dict) -> ft.Container:
                 padding=8,
                 width=44,
                 height=44,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.Alignment(0, 0),
             ),
             ft.Column(
                 [
@@ -141,7 +143,7 @@ def _alert_entry(alert: dict) -> ft.Container:
         spacing=12,
     )
 
-    return _glass_card(content, padding=ft.padding.symmetric(horizontal=16, vertical=12))
+    return _glass_card(content, padding=ft.padding.Padding(left=16, top=12, right=16, bottom=12))
 
 
 def _empty_state(tab_name: str) -> ft.Container:
@@ -170,9 +172,9 @@ def _empty_state(tab_name: str) -> ft.Container:
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=8,
         ),
-        alignment=ft.alignment.center,
+        alignment=ft.alignment.Alignment(0, 0),
         expand=True,
-        padding=ft.padding.only(top=60),
+        padding=ft.padding.Padding(left=0, top=60, right=0, bottom=0),
     )
 
 
@@ -232,7 +234,7 @@ def build_history_screen(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.only(left=4, right=12, top=12, bottom=4),
+        padding=ft.padding.Padding(left=4, top=12, right=12, bottom=4),
     )
 
     # -- Tabs --
@@ -248,7 +250,7 @@ def build_history_screen(
                     ),
                     bgcolor=ft.Colors.with_opacity(0.2, ft.Colors.TEAL),
                     border_radius=14,
-                    padding=ft.padding.symmetric(horizontal=24, vertical=10),
+                    padding=ft.padding.Padding(left=24, top=10, right=24, bottom=10),
                     animate=ft.Animation(200, ft.AnimationCurve.EASE_IN_OUT),
                 ),
                 tab_btn_all := ft.Container(
@@ -260,14 +262,14 @@ def build_history_screen(
                     ),
                     bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.WHITE),
                     border_radius=14,
-                    padding=ft.padding.symmetric(horizontal=24, vertical=10),
+                    padding=ft.padding.Padding(left=24, top=10, right=24, bottom=10),
                     animate=ft.Animation(200, ft.AnimationCurve.EASE_IN_OUT),
                 ),
             ],
             spacing=8,
             alignment=ft.MainAxisAlignment.CENTER,
         ),
-        padding=ft.padding.symmetric(horizontal=16, vertical=8),
+        padding=ft.padding.Padding(left=16, top=8, right=16, bottom=8),
     )
 
     content_stack = ft.Stack(
@@ -343,13 +345,13 @@ def build_history_screen(
             bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.RED),
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=14),
-                padding=ft.padding.symmetric(horizontal=20, vertical=10),
+                padding=ft.padding.Padding(left=20, top=10, right=20, bottom=10),
                 side=ft.BorderSide(1, ft.Colors.with_opacity(0.2, ft.Colors.RED)),
             ),
             on_click=_confirm_clear,
         ),
-        alignment=ft.alignment.center,
-        padding=ft.padding.only(bottom=8, top=4),
+        alignment=ft.alignment.Alignment(0, 0),
+        padding=ft.padding.Padding(left=0, top=4, right=0, bottom=8),
     )
 
     # -- Assemble --
@@ -361,7 +363,7 @@ def build_history_screen(
             ft.Container(
                 content=content_stack,
                 expand=True,
-                padding=ft.padding.symmetric(horizontal=16),
+                padding=ft.padding.Padding(left=16, top=0, right=16, bottom=0),
             ),
         ],
         spacing=0,

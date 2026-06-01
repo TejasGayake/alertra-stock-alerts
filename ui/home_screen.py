@@ -1,6 +1,7 @@
 """Main watchlist dashboard screen for Alertra."""
 
 import flet as ft
+from ui.theme import border_all
 
 
 def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
@@ -8,10 +9,10 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
     defaults = dict(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=16,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
     )
     defaults.update(kwargs)
@@ -114,7 +115,7 @@ def _symbol_card(
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
 
-    card = _glass_card(card_content, padding=ft.padding.symmetric(horizontal=20, vertical=14))
+    card = _glass_card(card_content, padding=ft.padding.Padding(left=20, top=14, right=20, bottom=14))
 
     return ft.Dismissible(
         content=card,
@@ -122,15 +123,15 @@ def _symbol_card(
         background=ft.Container(
             bgcolor=ft.Colors.RED_700,
             border_radius=24,
-            alignment=ft.alignment.center_left,
-            padding=ft.padding.only(left=30),
+            alignment=ft.alignment.Alignment(-1, 0),
+            padding=ft.padding.Padding(left=30, top=0, right=0, bottom=0),
             content=ft.Icon(ft.Icons.DELETE_OUTLINE, color=ft.Colors.WHITE, size=28),
         ),
         secondary_background=ft.Container(
             bgcolor=ft.Colors.TEAL_700,
             border_radius=24,
-            alignment=ft.alignment.center_right,
-            padding=ft.padding.only(right=30),
+            alignment=ft.alignment.Alignment(1, 0),
+            padding=ft.padding.Padding(left=0, top=0, right=30, bottom=0),
             content=ft.Icon(ft.Icons.TUNE_ROUNDED, color=ft.Colors.WHITE, size=28),
         ),
         dismiss_thresholds={
@@ -174,9 +175,9 @@ def _empty_state() -> ft.Container:
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=8,
         ),
-        alignment=ft.alignment.center,
+        alignment=ft.alignment.Alignment(0, 0),
         expand=True,
-        padding=ft.padding.only(top=80),
+        padding=ft.padding.Padding(left=0, top=80, right=0, bottom=0),
     )
 
 
@@ -195,12 +196,26 @@ def build_home_screen(
     # -- App bar --
     unread_count = len(db.get_alerts(limit=999, unread_only=True))
 
-    alert_badge = ft.Badge(
-        content=ft.Icon(ft.Icons.NOTIFICATIONS_NONE_ROUNDED, color=ft.Colors.WHITE, size=26),
-        value=str(unread_count) if unread_count > 0 else None,
-        bgcolor=ft.Colors.TEAL,
-        text_color=ft.Colors.WHITE,
-        visible=unread_count > 0,
+    alert_badge = ft.Stack(
+        [
+            ft.Icon(ft.Icons.NOTIFICATIONS_NONE_ROUNDED, color=ft.Colors.WHITE, size=26),
+            ft.Container(
+                content=ft.Text(
+                    str(unread_count),
+                    size=10,
+                    color=ft.Colors.WHITE,
+                    weight=ft.FontWeight.BOLD,
+                ),
+                bgcolor=ft.Colors.TEAL,
+                border_radius=8,
+                width=18,
+                height=18,
+                alignment=ft.alignment.Alignment(0, 0),
+                right=0,
+                top=0,
+                visible=unread_count > 0,
+            ),
+        ]
     )
 
     def open_history(e):
@@ -218,12 +233,7 @@ def build_home_screen(
                     "Alertra",
                     size=28,
                     weight=ft.FontWeight.W_800,
-                    color=ft.Colors.WHITE,
-                    gradient=ft.LinearGradient(
-                        begin=ft.alignment.center_left,
-                        end=ft.alignment.center_right,
-                        colors=[ft.Colors.TEAL_200, ft.Colors.TEAL],
-                    ),
+                    color=ft.Colors.TEAL_200,
                 ),
                 ft.Row(
                     [
@@ -244,7 +254,7 @@ def build_home_screen(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.only(left=20, right=12, top=12, bottom=8),
+        padding=ft.padding.Padding(left=20, top=12, right=12, bottom=8),
     )
 
     # -- Watchlist selector --
@@ -270,7 +280,7 @@ def build_home_screen(
         border_color=ft.Colors.with_opacity(0.2, ft.Colors.WHITE),
         border_radius=16,
         text_style=ft.TextStyle(color=ft.Colors.WHITE, size=14),
-        content_padding=ft.padding.symmetric(horizontal=16, vertical=10),
+        content_padding=ft.padding.Padding(left=16, top=10, right=16, bottom=10),
         width=220,
         dense=True,
     )
@@ -304,7 +314,7 @@ def build_home_screen(
 
     def _edit_alerts(item):
         if on_navigate:
-            on_navigate("alerts", symbol=item["symbol"])
+            on_navigate("alerts")
 
     def _on_watchlist_change(e):
         nonlocal current_watchlist_id
@@ -340,7 +350,7 @@ def build_home_screen(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.symmetric(horizontal=20, vertical=4),
+        padding=ft.padding.Padding(left=20, top=4, right=20, bottom=4),
     )
 
     # -- FAB (add symbol) --
@@ -365,7 +375,7 @@ def build_home_screen(
             ft.Container(
                 content=symbols_list,
                 expand=True,
-                padding=ft.padding.symmetric(horizontal=16),
+                padding=ft.padding.Padding(left=16, top=0, right=16, bottom=0),
             ),
         ],
         spacing=4,
@@ -374,7 +384,7 @@ def build_home_screen(
 
     scaffold = ft.Stack(
         [body],
-        alignment=ft.alignment.bottom_right,
+        alignment=ft.alignment.Alignment(1, 1),
         expand=True,
     )
 
@@ -384,7 +394,7 @@ def build_home_screen(
             content=fab,
             right=20,
             bottom=24,
-            alignment=ft.alignment.center_right,
+            alignment=ft.alignment.Alignment(1, 0),
         )
     )
 

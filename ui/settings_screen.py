@@ -1,6 +1,7 @@
 """Settings screen for Alertra."""
 
 import flet as ft
+from ui.theme import border_all
 
 
 def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
@@ -8,10 +9,10 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
     defaults = dict(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=16,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
     )
     defaults.update(kwargs)
@@ -26,7 +27,7 @@ def _section_header(title: str) -> ft.Container:
             weight=ft.FontWeight.W_600,
             color=ft.Colors.TEAL_200,
         ),
-        padding=ft.padding.only(left=4, top=16, bottom=6),
+        padding=ft.padding.Padding(left=4, top=16, bottom=6),
     )
 
 
@@ -46,7 +47,7 @@ def _setting_row(label: str, control: ft.Control) -> ft.Container:
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.symmetric(vertical=6),
+        padding=ft.padding.Padding(left=0, top=6, right=0, bottom=6),
     )
 
 
@@ -88,7 +89,7 @@ def build_settings_screen(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.padding.only(left=4, right=12, top=12, bottom=4),
+        padding=ft.padding.Padding(left=4, top=12, right=12, bottom=4),
     )
 
     # ----------------------------------------------------------------
@@ -108,7 +109,7 @@ def build_settings_screen(
     def _save_polling(e):
         db.set_setting("polling_interval", str(int(polling_slider.value)))
         if on_settings_change:
-            on_settings_change("polling_interval", str(int(polling_slider.value)))
+            on_settings_change()
 
     polling_slider.on_change_end = _save_polling
 
@@ -126,7 +127,7 @@ def build_settings_screen(
     def _save_cooldown(e):
         db.set_setting("cooldown_minutes", str(int(cooldown_slider.value)))
         if on_settings_change:
-            on_settings_change("cooldown_minutes", str(int(cooldown_slider.value)))
+            on_settings_change()
 
     cooldown_slider.on_change_end = _save_cooldown
 
@@ -141,7 +142,7 @@ def build_settings_screen(
         border_color=ft.Colors.with_opacity(0.2, ft.Colors.WHITE),
         border_radius=12,
         text_style=ft.TextStyle(color=ft.Colors.WHITE, size=14),
-        content_padding=ft.padding.symmetric(horizontal=16, vertical=8),
+        content_padding=ft.padding.Padding(left=16, top=8, right=16, bottom=8),
         width=140,
         dense=True,
     )
@@ -149,7 +150,7 @@ def build_settings_screen(
     def _save_theme(e):
         db.set_setting("theme", theme_dd.value)
         if on_settings_change:
-            on_settings_change("theme", theme_dd.value)
+            on_settings_change()
 
     theme_dd.on_change = _save_theme
 
@@ -180,7 +181,7 @@ def build_settings_screen(
     def _save_silent(e):
         db.set_setting("silent_mode", "true" if silent_mode.value else "false")
         if on_settings_change:
-            on_settings_change("silent_mode", str(silent_mode.value).lower())
+            on_settings_change()
 
     silent_mode.on_change = _save_silent
 
@@ -193,7 +194,7 @@ def build_settings_screen(
         color=ft.Colors.WHITE,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=12),
-            padding=ft.padding.symmetric(horizontal=16, vertical=10),
+            padding=ft.padding.Padding(left=16, top=10, right=16, bottom=10),
         ),
     )
 
@@ -203,7 +204,7 @@ def build_settings_screen(
         color=ft.Colors.WHITE,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=12),
-            padding=ft.padding.symmetric(horizontal=16, vertical=10),
+            padding=ft.padding.Padding(left=16, top=10, right=16, bottom=10),
         ),
     )
 
@@ -223,7 +224,7 @@ def build_settings_screen(
                     target_btn.text = formatted
                     db.set_setting(setting_key, formatted)
                     if on_settings_change:
-                        on_settings_change(setting_key, formatted)
+                        on_settings_change()
                     page.update()
 
             tp.on_change = on_change
@@ -262,7 +263,7 @@ def build_settings_screen(
                         alignment=ft.MainAxisAlignment.CENTER,
                         spacing=20,
                     ),
-                    padding=ft.padding.only(top=8),
+                    padding=ft.padding.Padding(top=8),
                 ),
             ],
             spacing=4,
@@ -283,14 +284,14 @@ def build_settings_screen(
         border_color=ft.Colors.with_opacity(0.2, ft.Colors.WHITE),
         border_radius=12,
         text_style=ft.TextStyle(color=ft.Colors.WHITE, size=14),
-        content_padding=ft.padding.symmetric(horizontal=16, vertical=8),
+        content_padding=ft.padding.Padding(left=16, top=8, right=16, bottom=8),
         dense=True,
     )
 
     def _save_provider(e):
         db.set_setting("api_provider", provider_dd.value)
         if on_settings_change:
-            on_settings_change("api_provider", provider_dd.value)
+            on_settings_change()
 
     provider_dd.on_change = _save_provider
 
@@ -302,7 +303,7 @@ def build_settings_screen(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_color=ft.Colors.with_opacity(0.2, ft.Colors.WHITE),
         border_radius=12,
-        content_padding=ft.padding.symmetric(horizontal=16, vertical=12),
+        content_padding=ft.padding.Padding(left=16, top=12, right=16, bottom=12),
         password=True,
         can_reveal_password=True,
         dense=True,
@@ -311,7 +312,7 @@ def build_settings_screen(
     def _save_api_key(e):
         db.set_setting("api_key", api_key_field.value)
         if on_settings_change:
-            on_settings_change("api_key", api_key_field.value)
+            on_settings_change()
 
     api_key_field.on_blur = _save_api_key
 
@@ -332,7 +333,7 @@ def build_settings_screen(
                         ],
                         spacing=4,
                     ),
-                    padding=ft.padding.only(top=8),
+                    padding=ft.padding.Padding(top=8),
                 ),
             ],
             spacing=4,
@@ -374,7 +375,7 @@ def build_settings_screen(
                         size=13,
                         color=ft.Colors.WHITE54,
                     ),
-                    padding=ft.padding.only(top=8),
+                    padding=ft.padding.Padding(top=8),
                 ),
             ],
             spacing=4,
@@ -401,7 +402,7 @@ def build_settings_screen(
                     scroll=ft.ScrollMode.AUTO,
                 ),
                 expand=True,
-                padding=ft.padding.symmetric(horizontal=16),
+                padding=ft.padding.Padding(left=16, right=16),
             ),
         ],
         spacing=0,

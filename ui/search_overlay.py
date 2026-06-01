@@ -1,6 +1,7 @@
 """Search overlay/modal for adding symbols to watchlist."""
 
 import flet as ft
+from ui.theme import border_all
 
 
 def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
@@ -8,10 +9,10 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
     defaults = dict(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+        border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
         blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
         padding=16,
-        margin=ft.margin.only(bottom=8),
+        margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
     )
     defaults.update(kwargs)
@@ -41,7 +42,7 @@ def build_search_overlay(
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_color=ft.Colors.with_opacity(0.2, ft.Colors.WHITE),
         border_radius=16,
-        content_padding=ft.padding.symmetric(horizontal=20, vertical=14),
+        content_padding=ft.padding.Padding(left=20, top=14, right=20, bottom=14),
         cursor_color=ft.Colors.TEAL,
         prefix_icon=ft.Icons.SEARCH_ROUNDED,
         autofocus=True,
@@ -55,8 +56,8 @@ def build_search_overlay(
             width=20,
             height=20,
         ),
-        alignment=ft.alignment.center,
-        padding=ft.padding.symmetric(vertical=16),
+        alignment=ft.alignment.Alignment(0, 0),
+        padding=ft.padding.Padding(left=0, top=16, right=0, bottom=16),
         visible=False,
     )
 
@@ -124,7 +125,7 @@ def build_search_overlay(
                             ),
                             bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.TEAL),
                             border_radius=10,
-                            padding=ft.padding.symmetric(horizontal=12, vertical=6),
+                            padding=ft.padding.Padding(left=12, top=6, right=12, bottom=6),
                         ),
                         ft.Column(
                             [
@@ -153,7 +154,7 @@ def build_search_overlay(
                     spacing=12,
                     vertical_alignment=ft.CrossAxisAlignment.CENTER,
                 ),
-                padding=ft.padding.symmetric(horizontal=8, vertical=10),
+                padding=ft.padding.Padding(left=8, top=10, right=8, bottom=10),
                 border_radius=16,
                 bgcolor=ft.Colors.with_opacity(0.0, ft.Colors.WHITE),
                 animate_bgcolor=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
@@ -208,8 +209,8 @@ def build_search_overlay(
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                         spacing=6,
                     ),
-                    alignment=ft.alignment.center,
-                    padding=ft.padding.symmetric(vertical=32),
+                    alignment=ft.alignment.Alignment(0, 0),
+                    padding=ft.padding.Padding(left=0, top=32, right=0, bottom=32),
                 )
             )
 
@@ -246,7 +247,7 @@ def build_search_overlay(
                     ],
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
-                padding=ft.padding.only(left=4, bottom=8, top=8),
+                padding=ft.padding.Padding(left=4, top=8, right=0, bottom=8),
             )
         )
 
@@ -265,9 +266,9 @@ def build_search_overlay(
                         weight=ft.FontWeight.W_500,
                     ),
                     bgcolor=ft.Colors.with_opacity(0.12, ft.Colors.WHITE),
-                    border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+                    border=border_all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
                     border_radius=14,
-                    padding=ft.padding.symmetric(horizontal=16, vertical=8),
+                    padding=ft.padding.Padding(left=16, top=8, right=16, bottom=8),
                 ),
                 on_tap=lambda e, s=sym: _quick_add(s),
             )
@@ -301,8 +302,8 @@ def build_search_overlay(
                     height=4,
                     bgcolor=ft.Colors.with_opacity(0.3, ft.Colors.WHITE),
                     border_radius=2,
-                    alignment=ft.alignment.center,
-                    margin=ft.margin.only(bottom=12),
+                    alignment=ft.alignment.Alignment(0, 0),
+                    margin=ft.margin.Margin(left=0, top=0, right=0, bottom=12),
                 ),
                 # Header
                 ft.Row(
@@ -330,7 +331,7 @@ def build_search_overlay(
                 ft.Container(
                     content=results_list,
                     expand=True,
-                    padding=ft.padding.only(top=4),
+                    padding=ft.padding.Padding(left=0, top=4, right=0, bottom=0),
                 ),
                 # Recent
                 recent_section,
@@ -339,11 +340,11 @@ def build_search_overlay(
             expand=True,
         ),
         bgcolor=ft.Colors.with_opacity(0.97, ft.Colors.GREY_900),
-        border_radius=ft.border_radius.only(top_left=24, top_right=24),
+        border_radius=ft.border_radius.BorderRadius(top_left=24, top_right=24, bottom_left=0, bottom_right=0),
         border=ft.border.only(
             top=ft.BorderSide(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
         ),
-        padding=ft.padding.only(left=20, right=20, top=8, bottom=16),
+        padding=ft.padding.Padding(left=20, top=8, right=20, bottom=16),
         height=page.height * 0.85 if page.height else 600,
         animate_position=ft.Animation(300, ft.AnimationCurve.EASE_OUT),
     )

@@ -104,9 +104,8 @@ class AlertraApp:
     def _setup_page(self):
         """Configure the Flet page."""
         self.page.title = "Alertra"
-        self.page.window.width = 400
-        self.page.window.height = 800
-        self.page.window.resizable = True
+        self.page.window_width = 400
+        self.page.window_height = 800
         self.page.padding = 0
         self.page.spacing = 0
 
@@ -120,9 +119,8 @@ class AlertraApp:
         else:
             self.page.theme_mode = ft.ThemeMode.SYSTEM
 
-        self.page.theme = get_theme(accent, "dark")
-        self.page.dark_theme = get_theme(accent, "dark")
-        self.page.light_theme = get_theme(accent, "light")
+        effective_theme = theme_mode if theme_mode in ("dark", "light") else "dark"
+        self.page.theme = get_theme(accent, effective_theme)
 
     def _build_ui(self):
         """Build the main UI with navigation."""
@@ -228,9 +226,8 @@ class AlertraApp:
             self.page.theme_mode = ft.ThemeMode.SYSTEM
 
         accent = self.db.get_setting("accent_color", "teal")
-        self.page.theme = get_theme(accent, "dark")
-        self.page.dark_theme = get_theme(accent, "dark")
-        self.page.light_theme = get_theme(accent, "light")
+        effective_theme = theme_mode if theme_mode in ("dark", "light") else "dark"
+        self.page.theme = get_theme(accent, effective_theme)
         self.page.update()
 
     async def _start_poller(self):
