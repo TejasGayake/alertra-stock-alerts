@@ -12,7 +12,7 @@ def _glass_card(content: ft.Control, **kwargs) -> ft.Container:
         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
         border_radius=24,
         border=border_all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
-        blur=ft.Blur(10, 10, ft.BlurMode.NORMAL),
+        blur=ft.Blur(10, 10),
         padding=16,
         margin=ft.margin.Margin(left=0, top=0, right=0, bottom=8),
         animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN_OUT),
