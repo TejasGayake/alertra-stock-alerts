@@ -341,8 +341,11 @@ def build_search_overlay(
         ),
         bgcolor=ft.Colors.with_opacity(0.97, ft.Colors.GREY_900),
         border_radius=ft.border_radius.BorderRadius(top_left=24, top_right=24, bottom_left=0, bottom_right=0),
-        border=ft.border.only(
+        border=ft.border.Border(
             top=ft.BorderSide(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+            bottom=ft.BorderSide(0, ft.Colors.TRANSPARENT),
+            left=ft.BorderSide(0, ft.Colors.TRANSPARENT),
+            right=ft.BorderSide(0, ft.Colors.TRANSPARENT),
         ),
         padding=ft.padding.Padding(left=20, top=8, right=20, bottom=16),
         height=page.height * 0.85 if page.height else 600,
@@ -353,7 +356,6 @@ def build_search_overlay(
         content=overlay_content,
         show_drag_handle=False,
         dismissible=True,
-        enable_drag=True,
     )
 
     return overlay

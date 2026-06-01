@@ -152,7 +152,7 @@ def build_settings_screen(
         if on_settings_change:
             on_settings_change()
 
-    theme_dd.on_change = _save_theme
+    theme_dd.on_select = _save_theme
 
     general_card = _glass_card(
         ft.Column(
@@ -213,7 +213,6 @@ def build_settings_screen(
             tp = ft.TimePicker(
                 confirm_text="OK",
                 cancel_text="Cancel",
-                time_picker_entry_mode=ft.TimePickerEntryMode.INPUT,
             )
 
             def on_change(ev):
@@ -293,7 +292,7 @@ def build_settings_screen(
         if on_settings_change:
             on_settings_change()
 
-    provider_dd.on_change = _save_provider
+    provider_dd.on_select = _save_provider
 
     api_key_field = ft.TextField(
         value=_get("api_key", ""),

@@ -161,7 +161,6 @@ def _param_editor_sheet(page: ft.Page, indicator, current_params: dict, on_save)
         content=sheet_content,
         show_drag_handle=True,
         dismissible=True,
-        enable_drag=True,
     )
     return sheet
 

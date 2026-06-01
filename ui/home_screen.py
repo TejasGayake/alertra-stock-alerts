@@ -322,7 +322,7 @@ def build_home_screen(
         db.set_active_watchlist(current_watchlist_id)
         load_symbols()
 
-    wl_dropdown.on_change = _on_watchlist_change
+    wl_dropdown.on_select = _on_watchlist_change
 
     # -- Pull-to-refresh wrapper --
     async def _refresh_quotes(e=None):
