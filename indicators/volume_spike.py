@@ -28,7 +28,7 @@ class VolumeSpikeIndicator(Indicator):
 
         symbol = data["symbol"]
         current_volume: float = data["current_volume"]
-        volume_history: List[float] = data["volume_history"]
+        volume_history: List[float] = data.get("volume_history", [])
 
         recent = volume_history[-sma_period:]
         if len(recent) < sma_period:
