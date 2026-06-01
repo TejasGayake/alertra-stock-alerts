@@ -1,0 +1,4 @@
+flet>=0.25.0
+yfinance>=0.2.40
+plyer>=2.1.0
+requests>=2.31.0

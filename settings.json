@@ -1,0 +1,19 @@
+{
+  "app_name": "Alertra",
+  "version": "1.0.0",
+  "polling_interval_seconds": 300,
+  "cooldown_seconds": 300,
+  "volume_multiplier": 3.0,
+  "sma_period": 8,
+  "theme": "dark",
+  "accent_color": "teal",
+  "notification_sound": "default",
+  "silent_mode_enabled": false,
+  "silent_mode_start": "22:00",
+  "silent_mode_end": "07:00",
+  "data_provider": "yahoo",
+  "api_key": "",
+  "market_open": "09:15",
+  "market_close": "15:30",
+  "market_timezone": "Asia/Kolkata"
+}
