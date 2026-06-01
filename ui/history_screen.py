@@ -279,7 +279,6 @@ def build_history_screen(
     )
 
     def _switch_tab(e, idx):
-        tab_index.current = idx
         content_stack.controls[0].visible = (idx == 0)
         content_stack.controls[1].visible = (idx == 1)
 

@@ -166,6 +166,9 @@ Indicators auto-discovered from `indicators/` folder. User enable/disable in Set
 - User wants to upload project to GitHub
 - Create repo if not exists, commit all changes
 - No co-author on commits
+- **GitHub Repo:** https://github.com/TejasGayake/alertra-stock-alerts
+- **Branch:** master
+- **Initial commit:** 28 files, 4096 lines
 
 ## Development Notes
 - **Use multiple agents in parallel** - spawn multiple agents to do different tasks simultaneously for faster execution
